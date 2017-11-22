@@ -7,16 +7,16 @@ import android.os.Parcelable;
  * Created by Christian 24 on 22/11/2017.
  */
 
-public class Tareas implements Parcelable{
+public class TareasModel implements Parcelable{
     private String titulo;
     private String fecha;
     private String hora;
     private boolean activar;
 
-    public Tareas() {
+    public TareasModel() {
     }
 
-    public Tareas(String titulo, String fecha, String hora, boolean activar) {
+    public TareasModel(String titulo, String fecha, String hora, boolean activar) {
         this.titulo = titulo;
         this.fecha = fecha;
         this.hora = hora;
@@ -55,22 +55,22 @@ public class Tareas implements Parcelable{
         this.activar = activar;
     }
 
-    protected Tareas(Parcel in) {
+    protected TareasModel(Parcel in) {
         titulo = in.readString();
         fecha = in.readString();
         hora = in.readString();
         activar = in.readByte() != 0;
     }
 
-    public static final Creator<Tareas> CREATOR = new Creator<Tareas>() {
+    public static final Creator<TareasModel> CREATOR = new Creator<TareasModel>() {
         @Override
-        public Tareas createFromParcel(Parcel in) {
-            return new Tareas(in);
+        public TareasModel createFromParcel(Parcel in) {
+            return new TareasModel(in);
         }
 
         @Override
-        public Tareas[] newArray(int size) {
-            return new Tareas[size];
+        public TareasModel[] newArray(int size) {
+            return new TareasModel[size];
         }
     };
 

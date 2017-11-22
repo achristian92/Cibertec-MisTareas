@@ -1,7 +1,6 @@
 package apps.construyendo.mitarea.presentacion.Presenter;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.util.Log;
 
 import apps.construyendo.mitarea.datos.entity.mapper.TareaEntityDataMapper;
 import apps.construyendo.mitarea.datos.repository.TareaDataRepositorio;
@@ -10,77 +9,56 @@ import apps.construyendo.mitarea.dominio.executor.JobExecutor;
 import apps.construyendo.mitarea.dominio.executor.UIThread;
 import apps.construyendo.mitarea.dominio.model.Tareas;
 import apps.construyendo.mitarea.dominio.repository.TareaRepositorio;
-import apps.construyendo.mitarea.dominio.usecase.ListarTareas;
+import apps.construyendo.mitarea.dominio.usecase.GuardarTarea;
 import apps.construyendo.mitarea.dominio.usecase.UseCase;
 import apps.construyendo.mitarea.presentacion.Model.TareasModel;
 import apps.construyendo.mitarea.presentacion.Model.mapper.TareaModelDataMapper;
-import apps.construyendo.mitarea.presentacion.View.TareasView;
+import apps.construyendo.mitarea.presentacion.View.fragment.TareaDetalleView;
 
 /**
  * Created by Christian 24 on 22/11/2017.
  */
+//despues de DATOS
+public class TareaDetallePresenter extends BasePresenter<TareaDetalleView> {
 
-public class TareasPresenter extends BasePresenter<TareasView> {
+    private static final String TAG = "NoticiaDetallePresenter";
+    private final GuardarTarea guardarTarea;
+    private final TareaModelDataMapper tareaModelDataMapper;
 
-    private final ListarTareas listarTareas; //despues de DATOS
-    private final TareaModelDataMapper tareaModelDataMapper;//despues de DATOS
-
-
-    public TareasPresenter(TareasView view) {
+    public TareaDetallePresenter(TareaDetalleView view) {
         super(view);
-        //despues de DATOS
+
         this.tareaModelDataMapper=new TareaModelDataMapper();
 
         TareaRepositorio tareaRepositorio=new TareaDataRepositorio(
                 new TareaDataSourceFactory(view.context()),
                 new TareaEntityDataMapper()
         );
-        this.listarTareas=new ListarTareas(
+
+        this.guardarTarea=new GuardarTarea(
                 new JobExecutor(),
                 new UIThread(),
                 tareaRepositorio
         );
     }
 
-
-
-    public void cargarTareas(){
-
-        //despues de DATOS
+    public void guardarTarea(TareasModel tareasModel){
         view.mostrarLoading();
-        this.listarTareas.ejecutar(new UseCase.Callback<List<Tareas>>() {
+
+        this.guardarTarea.setParams(tareaModelDataMapper.transformar(tareasModel));
+
+        this.guardarTarea.ejecutar(new UseCase.Callback<Tareas>() {
             @Override
-            public void onSuccess(List<Tareas> response) {
+            public void onSuccess(Tareas response) {
                 view.ocultarLoading();
-                view.mostrarTareas(tareaModelDataMapper.transformar(response));
+                view.notificarTareaGuardada();
             }
 
             @Override
             public void onError(Throwable t) {
-            view.ocultarLoading();
+                view.ocultarLoading();
+                Log.e(TAG,"onError",t);
             }
         });
-
-
-
-
-        /*view.mostrarLoading();
-
-        List<TareasModel> tareasModelList =new ArrayList<>();
-        for (int i=0;i<10;i++){
-            TareasModel tareasModel =new TareasModel();
-            tareasModel.setTitulo("Tarea"+(i+1));
-            tareasModel.setFecha("Fecha"+(i+1));
-            tareasModel.setHora("Hora"+(i+1));
-            tareasModel.setActivar(true);
-
-            tareasModelList.add(tareasModel);
-        }
-        view.mostrarTareas(tareasModelList);
-        view.ocultarLoading();*/
-
-
-
-
     }
 }

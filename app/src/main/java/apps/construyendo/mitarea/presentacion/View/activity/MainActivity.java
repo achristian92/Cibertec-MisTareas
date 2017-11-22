@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
 import apps.construyendo.mitarea.R;
-import apps.construyendo.mitarea.presentacion.Model.Tareas;
+import apps.construyendo.mitarea.presentacion.Model.TareasModel;
 import apps.construyendo.mitarea.presentacion.View.fragment.Tareas_Detalle_fragment;
 import apps.construyendo.mitarea.presentacion.View.fragment.Tareas_fragment;
 
@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements Tareas_fragment.o
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar=findViewById(R.id.toolbar_princi);
-        showToolbar("Mis Tareas",false);
+        showToolbar("Mis TareasModel",false);
 
         Fragment tareadetallefragment=getSupportFragmentManager().findFragmentById(R.id.frag_tareas_detalle);
         isDualPane = tareadetallefragment!=null;
@@ -33,16 +33,16 @@ public class MainActivity extends AppCompatActivity implements Tareas_fragment.o
         getSupportActionBar().setDisplayHomeAsUpEnabled(upButton);
     }
     @Override
-    public void onTareaClick(Tareas tareas) {
+    public void onTareaClick(TareasModel tareasModel) {
         if(!isDualPane){
             //si es telefono
             Intent intent = new Intent(MainActivity.this, Detalle_TareaActivity.class);
-            intent.putExtra(Detalle_TareaActivity.EXTRA_NOTICIA, tareas);
+            intent.putExtra(Detalle_TareaActivity.EXTRA_NOTICIA, tareasModel);
             startActivity(intent);
         }else{
             //si es tablet
             Tareas_Detalle_fragment tareas_detalle_fragment= (Tareas_Detalle_fragment) getSupportFragmentManager().findFragmentById(R.id.frag_tareas_detalle);
-            tareas_detalle_fragment.setTareas(tareas);
+            tareas_detalle_fragment.setTareasModel(tareasModel);
         }
     }
 

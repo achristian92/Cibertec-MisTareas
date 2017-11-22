@@ -14,7 +14,7 @@ import apps.construyendo.mitarea.dominio.repository.TareaRepositorio;
 public class ListarTareas extends UseCase<List<Tareas>> {
     private final TareaRepositorio tareaRepository;
 
-    protected ListarTareas(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread, TareaRepositorio tareaRepository) {
+    public ListarTareas(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread, TareaRepositorio tareaRepository) {
         super(threadExecutor, postExecutionThread);
         this.tareaRepository=tareaRepository;
     }

@@ -4,8 +4,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import apps.construyendo.mitarea.R;
-import apps.construyendo.mitarea.presentacion.Model.Tareas;
+import apps.construyendo.mitarea.presentacion.Model.TareasModel;
 import apps.construyendo.mitarea.presentacion.View.fragment.Tareas_Detalle_fragment;
 
 public class Detalle_TareaActivity extends AppCompatActivity {
@@ -15,9 +14,9 @@ public class Detalle_TareaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_detalle_tarea);
-        Tareas tareas=getIntent().getParcelableExtra(EXTRA_NOTICIA);
+        TareasModel tareasModel =getIntent().getParcelableExtra(EXTRA_NOTICIA);
         FragmentTransaction ft=getSupportFragmentManager().beginTransaction();//iniciar una transaccion
-        ft.add(android.R.id.content, new Tareas_Detalle_fragment().newInstance(tareas));
+        ft.add(android.R.id.content, new Tareas_Detalle_fragment().newInstance(tareasModel));
         ft.commit();
     }
 }

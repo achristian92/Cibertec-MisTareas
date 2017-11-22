@@ -14,7 +14,7 @@ public class GuardarTarea extends UseCase<Tareas> {
     private final TareaRepositorio tareaRepository;
     private Tareas tareas;
 
-    protected GuardarTarea(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread, TareaRepositorio tareaRepository) {
+    public GuardarTarea(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread, TareaRepositorio tareaRepository) {
         super(threadExecutor, postExecutionThread);
         this.tareaRepository = tareaRepository;
     }

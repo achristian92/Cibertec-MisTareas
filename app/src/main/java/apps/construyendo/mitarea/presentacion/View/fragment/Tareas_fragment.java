@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import apps.construyendo.mitarea.R;
-import apps.construyendo.mitarea.presentacion.Model.Tareas;
+import apps.construyendo.mitarea.presentacion.Model.TareasModel;
 import apps.construyendo.mitarea.presentacion.Presenter.TareasPresenter;
 import apps.construyendo.mitarea.presentacion.View.TareasView;
 
@@ -37,8 +37,8 @@ public class Tareas_fragment extends Fragment implements TareasView {
 
     //requerido
     private TareasPresenter tareasPresenter;
-    private ArrayAdapter<Tareas> adapter;
-    private List<Tareas> tareasList=new ArrayList<>();
+    private ArrayAdapter<TareasModel> adapter;
+    private List<TareasModel> tareasModelList =new ArrayList<>();
     private int index=0;
     private onTareasClickListerner onTareasClickListerner;
 
@@ -75,11 +75,11 @@ public class Tareas_fragment extends Fragment implements TareasView {
         if(savedInstanceState!=null){
 
         }
-        adapter=new ArrayAdapter<Tareas>(getContext(),android.R.layout.simple_list_item_1,tareasList);
+        adapter=new ArrayAdapter<TareasModel>(getContext(),android.R.layout.simple_list_item_1, tareasModelList);
         listatareas.setAdapter(adapter);
 
         tareasPresenter=new TareasPresenter(this);
-        tareasPresenter.cargarTareas();
+        //tareasPresenter.cargarTareas();
 
 
         //Click a los Item de la ListView
@@ -88,7 +88,7 @@ public class Tareas_fragment extends Fragment implements TareasView {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 listatareas.setItemChecked(i,true);
                 index=i;
-                verDetalle(tareasList.get(i));
+                verDetalle(tareasModelList.get(i));
 
             }
         });
@@ -100,6 +100,12 @@ public class Tareas_fragment extends Fragment implements TareasView {
                 agregarTarea();
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        tareasPresenter.cargarTareas();
     }
 
     @Override
@@ -118,8 +124,8 @@ public class Tareas_fragment extends Fragment implements TareasView {
     }
     //Ver detalle de cada listview
     @Override
-    public void verDetalle(Tareas tareas) {
-        onTareasClickListerner.onTareaClick(tareas);
+    public void verDetalle(TareasModel tareasModel) {
+        onTareasClickListerner.onTareaClick(tareasModel);
     }
     //Agregar Una Nueva Tarea
     @Override
@@ -128,21 +134,26 @@ public class Tareas_fragment extends Fragment implements TareasView {
     }
 
     @Override
-    public void mostrarTareas(final List<Tareas> tareasList) {
+    public void mostrarTareas(final List<TareasModel> tareasModelList) {
         adapter.clear();
-        adapter.addAll(tareasList);
+        adapter.addAll(tareasModelList);
+        if(getResources().getBoolean(R.bool.dual_pane)){
+            listatareas.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+            listatareas.setItemChecked(index,true);
+            verDetalle(tareasModelList.get(index));
+        }
         //mostrar el 1 dato por defecto
-        listatareas.post(new Runnable() {
+        /*listatareas.post(new Runnable() {
             @Override
             public void run() {
                 Fragment tareadetallefragment=getFragmentManager().findFragmentById(R.id.frag_tareas_detalle);
                 if(tareadetallefragment!=null){
-                    verDetalle(tareasList.get(index));
+                    verDetalle(tareasModelList.get(index));
                     listatareas.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
                     listatareas.setItemChecked(index,true);
                 }
             }
-        });
+        });*/ // creamos despues de package datos
     }
     //cuando tengo el activity todo creado ahora si llamo al metodo del activity
     @Override
@@ -152,7 +163,7 @@ public class Tareas_fragment extends Fragment implements TareasView {
     }
 
     public interface onTareasClickListerner{
-        void onTareaClick(Tareas tareas);
+        void onTareaClick(TareasModel tareasModel);
         void onAgregarTareasCkick();
     }
 
