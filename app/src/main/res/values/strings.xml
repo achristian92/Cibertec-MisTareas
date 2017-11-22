@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">MiTarea</string>
+
+
+    <string name="ingre_fecha">Fecha</string>
+    <string name="ingre_titulo">Titulo</string>
+    <string name="hora">Hora</string>
+    <string name="recordar_tareas">Recordar</string>
+    <string name="detalle_lista_tareas_total">Detalle Lista Tareas</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

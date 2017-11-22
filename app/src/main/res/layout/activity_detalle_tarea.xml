@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="apps.construyendo.mitarea.presentacion.View.activity.Detalle_TareaActivity">
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/frag_tareas_detalle"
+        android:name="apps.construyendo.mitarea.presentacion.View.fragment.Tareas_Detalle_fragment"
+        tools:layout="@layout/fragment_tareas_detalle" />
+
+</android.support.constraint.ConstraintLayout>
