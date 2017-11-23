@@ -14,7 +14,7 @@ public class TareaEntity {
     @SerializedName("horaB")
     private String hora;
     @SerializedName("activarB")
-    private boolean activar;
+    private String activar;
 
     public String getTitulo() {
         return titulo;
@@ -40,11 +40,11 @@ public class TareaEntity {
         this.hora = hora;
     }
 
-    public boolean isActivar() {
+    public String getActivar() {
         return activar;
     }
 
-    public void setActivar(boolean activar) {
+    public void setActivar(String activar) {
         this.activar = activar;
     }
 }

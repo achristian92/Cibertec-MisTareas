@@ -17,7 +17,7 @@ public class TareaEntityDataMapper {
         tareas.setTitulo(tareaEntity.getTitulo());
         tareas.setFecha(tareaEntity.getFecha());
         tareas.setHora(tareaEntity.getHora());
-        tareas.setActivar(tareaEntity.isActivar());
+        tareas.setActivar(tareaEntity.getActivar());
         return tareas;
     }
     public TareaEntity tranformar(Tareas tareas){
@@ -25,7 +25,7 @@ public class TareaEntityDataMapper {
         tareaEntity.setTitulo(tareas.getTitulo());
         tareaEntity.setFecha(tareas.getFecha());
         tareaEntity.setHora(tareas.getHora());
-        tareaEntity.setActivar(tareas.isActivar());
+        tareaEntity.setActivar(tareas.getActivar());
         return tareaEntity;
     }
     public List<Tareas> transformar(List<TareaEntity> noticiaEntityList) {

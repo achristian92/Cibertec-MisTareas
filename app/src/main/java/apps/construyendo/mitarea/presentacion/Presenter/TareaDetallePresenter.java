@@ -13,7 +13,7 @@ import apps.construyendo.mitarea.dominio.usecase.GuardarTarea;
 import apps.construyendo.mitarea.dominio.usecase.UseCase;
 import apps.construyendo.mitarea.presentacion.Model.TareasModel;
 import apps.construyendo.mitarea.presentacion.Model.mapper.TareaModelDataMapper;
-import apps.construyendo.mitarea.presentacion.View.fragment.TareaDetalleView;
+import apps.construyendo.mitarea.presentacion.View.TareaDetalleView;
 
 /**
  * Created by Christian 24 on 22/11/2017.

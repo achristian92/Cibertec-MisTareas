@@ -11,15 +11,43 @@ public class TareasModel implements Parcelable{
     private String titulo;
     private String fecha;
     private String hora;
-    private boolean activar;
+    private String activar;
 
     public TareasModel() {
     }
 
-    public TareasModel(String titulo, String fecha, String hora, boolean activar) {
+    public TareasModel(String titulo, String fecha, String hora, String activar) {
         this.titulo = titulo;
         this.fecha = fecha;
         this.hora = hora;
+        this.activar = activar;
+    }
+
+
+    protected TareasModel(Parcel in) {
+        titulo = in.readString();
+        fecha = in.readString();
+        hora = in.readString();
+        activar = in.readString();
+    }
+
+    public static final Creator<TareasModel> CREATOR = new Creator<TareasModel>() {
+        @Override
+        public TareasModel createFromParcel(Parcel in) {
+            return new TareasModel(in);
+        }
+
+        @Override
+        public TareasModel[] newArray(int size) {
+            return new TareasModel[size];
+        }
+    };
+
+    public String getActivar() {
+        return activar;
+    }
+
+    public void setActivar(String activar) {
         this.activar = activar;
     }
 
@@ -47,32 +75,12 @@ public class TareasModel implements Parcelable{
         this.hora = hora;
     }
 
-    public boolean isActivar() {
-        return activar;
+
+    @Override
+    public String toString() {
+        return titulo + "-" + fecha + "-" + hora + "-" + activar;
     }
 
-    public void setActivar(boolean activar) {
-        this.activar = activar;
-    }
-
-    protected TareasModel(Parcel in) {
-        titulo = in.readString();
-        fecha = in.readString();
-        hora = in.readString();
-        activar = in.readByte() != 0;
-    }
-
-    public static final Creator<TareasModel> CREATOR = new Creator<TareasModel>() {
-        @Override
-        public TareasModel createFromParcel(Parcel in) {
-            return new TareasModel(in);
-        }
-
-        @Override
-        public TareasModel[] newArray(int size) {
-            return new TareasModel[size];
-        }
-    };
 
     @Override
     public int describeContents() {
@@ -84,11 +92,7 @@ public class TareasModel implements Parcelable{
         parcel.writeString(titulo);
         parcel.writeString(fecha);
         parcel.writeString(hora);
-        parcel.writeByte((byte) (activar ? 1 : 0));
-    }
-
-    @Override
-    public String toString() {
-        return titulo+"-"+fecha+"-"+hora+""+activar;
+        parcel.writeString(activar);
     }
 }
+

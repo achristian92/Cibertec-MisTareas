@@ -1,4 +1,4 @@
-package apps.construyendo.mitarea.presentacion.View.fragment;
+package apps.construyendo.mitarea.presentacion.View;
 
 import apps.construyendo.mitarea.presentacion.Model.TareasModel;
 import apps.construyendo.mitarea.presentacion.View.LoadingView;

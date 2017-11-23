@@ -16,7 +16,7 @@ public class TareaModelDataMapper {
         tareasModel.setTitulo(tareas.getTitulo());
         tareasModel.setFecha(tareas.getFecha());
         tareasModel.setHora(tareas.getHora());
-        tareasModel.setActivar(tareas.isActivar());
+        tareasModel.setActivar(tareas.getActivar());
         return tareasModel;
     }
 
@@ -25,7 +25,7 @@ public class TareaModelDataMapper {
         tareas.setTitulo(tareasModel.getTitulo());
         tareas.setFecha(tareasModel.getFecha());
         tareas.setHora(tareasModel.getHora());
-        tareasModel.setActivar(tareasModel.isActivar());
+        tareas.setActivar(tareasModel.getActivar());
         return tareas;
     }
 

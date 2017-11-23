@@ -8,7 +8,7 @@ public class Tareas {
     private String titulo;
     private String fecha;
     private String hora;
-    private boolean activar;
+    private String activar;
 
     public String getTitulo() {
         return titulo;
@@ -34,11 +34,11 @@ public class Tareas {
         this.hora = hora;
     }
 
-    public boolean isActivar() {
+    public String getActivar() {
         return activar;
     }
 
-    public void setActivar(boolean activar) {
+    public void setActivar(String activar) {
         this.activar = activar;
     }
 }
