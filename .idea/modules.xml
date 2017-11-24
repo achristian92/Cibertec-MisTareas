@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MiTarea.iml" filepath="$PROJECT_DIR$/MiTarea.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Cibertec-MisTareas.iml" filepath="$PROJECT_DIR$/Cibertec-MisTareas.iml" />
+      <module fileurl="file://D:\EjerciciosAndroid\App_Cibertec_Ejemplos\Ejemplos-Notas-MisNotas\github\Cibertec-MisTareas\MiTarea.iml" filepath="D:\EjerciciosAndroid\App_Cibertec_Ejemplos\Ejemplos-Notas-MisNotas\github\Cibertec-MisTareas\MiTarea.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

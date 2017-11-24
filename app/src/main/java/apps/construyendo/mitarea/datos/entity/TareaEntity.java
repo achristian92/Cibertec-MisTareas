@@ -10,7 +10,7 @@ import io.realm.annotations.PrimaryKey;
  * Created by Christian 24 on 22/11/2017.
  */
 
-public class TareaEntity extends RealmObject {
+public class TareaEntity extends RealmObject { //1..data
     @PrimaryKey
     @SerializedName("objectId")
     private String id;
