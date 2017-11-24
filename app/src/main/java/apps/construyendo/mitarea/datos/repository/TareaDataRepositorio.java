@@ -23,12 +23,23 @@ public class TareaDataRepositorio implements TareaRepositorio {
         this.tareaEntityDataMapper = tareaEntityDataMapper;
     }
 
+
+    /*
     @Override
     public List<Tareas> listarTareas() throws Exception {
         final TareaDatasource tareaDatasource=tareaDataSourceFactory.crearNetworkDatasource();
         List<TareaEntity> tareaEntityList=tareaDatasource.tareaEntityList();
         return tareaEntityDataMapper.transformar(tareaEntityList);
+    }*/
+    //modificamos hicmos copia abajo 11 data
+    @Override
+    public List<Tareas> listarTareas(boolean forzarRed) throws Exception {
+        final TareaDatasource tareaDatasource=tareaDataSourceFactory.crear(forzarRed);
+        List<TareaEntity> tareaEntityList=tareaDatasource.listartarea();
+        return tareaEntityDataMapper.transformar(tareaEntityList);
     }
+
+
 
     @Override
     public Tareas crearTarea(Tareas tareas) throws Exception {
@@ -42,4 +53,13 @@ public class TareaDataRepositorio implements TareaRepositorio {
     public Tareas actualizarTarea(Tareas tareas) throws Exception {
         return null;
     }
+
+  /*  @Override
+    public Tareas actualizarTarea(String id, Tareas tareas) throws Exception {
+        final TareaDatasource tareaDatasource=tareaDataSourceFactory.actualizarNetworkDatasource();
+        TareaEntity tareaEntity=tareaDatasource.actualizarNotcia(tareaEntityDataMapper.tranformar(id,tareas));
+        return tareaEntityDataMapper.transformar(tareaEntity);
+    }
+
+*/
 }

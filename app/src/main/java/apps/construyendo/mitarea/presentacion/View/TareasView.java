@@ -10,7 +10,8 @@ import apps.construyendo.mitarea.presentacion.Model.TareasModel;
  */
 
 public interface TareasView extends LoadingView{
+    void mostrarTareas(List<TareasModel> tareasModelList);
     void verDetalle(TareasModel tareasModel);
     void agregarTarea();
-    void mostrarTareas(List<TareasModel> tareasModelList);
+
 }

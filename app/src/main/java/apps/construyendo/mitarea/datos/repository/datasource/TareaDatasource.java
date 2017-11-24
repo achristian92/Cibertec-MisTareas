@@ -9,7 +9,14 @@ import apps.construyendo.mitarea.datos.entity.TareaEntity;
  */
 
 public interface TareaDatasource {
-    List<TareaEntity> tareaEntityList() throws Exception;
+
+    List<TareaEntity> listartarea() throws Exception;
 
     TareaEntity crearNoticia(TareaEntity tareaEntity) throws Exception;
+
+    //ACTUALIZAR-MIO ..2
+  //  TareaEntity actualizarNotcia(String id,TareaEntity tareaEntity) throws Exception;
+
+
+
 }

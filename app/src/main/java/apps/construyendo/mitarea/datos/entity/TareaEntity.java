@@ -2,11 +2,18 @@ package apps.construyendo.mitarea.datos.entity;
 
 import com.google.gson.annotations.SerializedName;
 
+import io.realm.RealmModel;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by Christian 24 on 22/11/2017.
  */
 
-public class TareaEntity {
+public class TareaEntity extends RealmObject {
+    @PrimaryKey
+    @SerializedName("objectId")
+    private String id;
     @SerializedName("tituloB")
     private String titulo;
     @SerializedName("fechaB")
@@ -46,5 +53,13 @@ public class TareaEntity {
 
     public void setActivar(String activar) {
         this.activar = activar;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

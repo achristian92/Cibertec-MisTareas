@@ -28,6 +28,9 @@ public class TareaEntityDataMapper {
         tareaEntity.setActivar(tareas.getActivar());
         return tareaEntity;
     }
+
+
+
     public List<Tareas> transformar(List<TareaEntity> noticiaEntityList) {
         List<Tareas> noticiaModelList = new ArrayList<>();
         for (TareaEntity noticiaEntity : noticiaEntityList) {
@@ -36,4 +39,10 @@ public class TareaEntityDataMapper {
         }
         return noticiaModelList;
     }
+
+
+
+
+
+
 }

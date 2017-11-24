@@ -49,7 +49,7 @@ public class Tareas_Detalle_fragment extends Fragment implements TareaDetalleVie
 
     //CREAMOS  RECUPERAR LOS DATOS ENVIADOS
     //(1)
-    public Fragment newInstance(TareasModel tareasModel) {
+    public static  Tareas_Detalle_fragment newInstance(TareasModel tareasModel) {
 
         Tareas_Detalle_fragment f = new Tareas_Detalle_fragment();
         Bundle args = new Bundle();
@@ -88,6 +88,8 @@ public class Tareas_Detalle_fragment extends Fragment implements TareaDetalleVie
         toolbar_detalle=view.findViewById(R.id.toolbar_princi);
         btn_guardartarea=view.findViewById(R.id.btn_guardar);
         progressBar=view.findViewById(R.id.progress);
+
+
         showToolbar("Detalle de Mi Tarea",true);
         initUI();
 

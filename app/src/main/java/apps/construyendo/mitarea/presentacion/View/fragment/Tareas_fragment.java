@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -27,7 +28,7 @@ import apps.construyendo.mitarea.presentacion.View.TareasView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Tareas_fragment extends Fragment implements TareasView {
+public class Tareas_fragment extends Fragment implements TareasView,AdapterView.OnItemClickListener {
 
     //instanciar widget
     ListView listatareas;
@@ -62,17 +63,28 @@ public class Tareas_fragment extends Fragment implements TareasView {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=inflater.inflate(R.layout.fragment_tarea, container, false);
-        progressBar=view.findViewById(R.id.progress);
-        fabagregar=view.findViewById(R.id.float_agregar);
-        listatareas=view.findViewById(R.id.listview_tareas);
-        return view;
+        return inflater.inflate(R.layout.fragment_tarea, container, false);
+
+
     }
     //creamos
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
-        super.onViewCreated(view,savedInstanceState);
+        progressBar=view.findViewById(R.id.progress);
+        fabagregar=view.findViewById(R.id.float_agregar);
+        listatareas=view.findViewById(R.id.listview_tareas);
+        //super.onViewCreated(view,savedInstanceState);
+        listatareas.setOnItemClickListener(this);
+        //Click en flo FloatButton para Agregar nueva Tarea
+        fabagregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                agregarTarea();
+            }
+        });
+
         if(savedInstanceState!=null){
+            index=savedInstanceState.getInt("index",0);
 
         }
         adapter=new ArrayAdapter<TareasModel>(getContext(),android.R.layout.simple_list_item_1, tareasModelList);
@@ -82,7 +94,7 @@ public class Tareas_fragment extends Fragment implements TareasView {
         //tareasPresenter.cargarTareas();
 
 
-        //Click a los Item de la ListView
+        /*Click a los Item de la ListView
         listatareas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -91,21 +103,21 @@ public class Tareas_fragment extends Fragment implements TareasView {
                 verDetalle(tareasModelList.get(i));
 
             }
-        });
+        });*/
 
-        //Click en flo FloatButton para Agregar nueva Tarea
-        fabagregar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                agregarTarea();
-            }
-        });
+
     }
 
     @Override
     public void onStart() {
         super.onStart();
         tareasPresenter.cargarTareas();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putInt("index",index);
     }
 
     @Override
@@ -122,16 +134,7 @@ public class Tareas_fragment extends Fragment implements TareasView {
     public Context context() {
         return getContext();
     }
-    //Ver detalle de cada listview
-    @Override
-    public void verDetalle(TareasModel tareasModel) {
-        onTareasClickListerner.onTareaClick(tareasModel);
-    }
-    //Agregar Una Nueva Tarea
-    @Override
-    public void agregarTarea() {
-        onTareasClickListerner.onAgregarTareasCkick();
-    }
+
 
     @Override
     public void mostrarTareas(final List<TareasModel> tareasModelList) {
@@ -155,11 +158,36 @@ public class Tareas_fragment extends Fragment implements TareasView {
             }
         });*/ // creamos despues de package datos
     }
-    //cuando tengo el activity todo creado ahora si llamo al metodo del activity
+
+
+
+
+
+    //Ver detalle de cada listview
     @Override
+    public void verDetalle(TareasModel tareasModel) {
+        onTareasClickListerner.onTareaClick(tareasModel);
+    }
+    //Agregar Una Nueva Tarea
+    @Override
+    public void agregarTarea() {
+        onTareasClickListerner.onAgregarTareasCkick();
+    }
+
+
+    //cuando tengo el activity todo creado ahora si llamo al metodo del activity
+   /* @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         tareasPresenter.cargarTareas();
+    }
+*/
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        index=i;
+        listatareas.setItemChecked(i,true);
+        verDetalle(tareasModelList.get(i));
     }
 
     public interface onTareasClickListerner{

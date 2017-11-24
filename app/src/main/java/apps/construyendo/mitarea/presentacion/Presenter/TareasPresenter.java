@@ -1,5 +1,7 @@
 package apps.construyendo.mitarea.presentacion.Presenter;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +16,7 @@ import apps.construyendo.mitarea.dominio.usecase.ListarTareas;
 import apps.construyendo.mitarea.dominio.usecase.UseCase;
 import apps.construyendo.mitarea.presentacion.Model.TareasModel;
 import apps.construyendo.mitarea.presentacion.Model.mapper.TareaModelDataMapper;
+import apps.construyendo.mitarea.presentacion.NetworkUtils;
 import apps.construyendo.mitarea.presentacion.View.TareasView;
 
 /**
@@ -21,6 +24,8 @@ import apps.construyendo.mitarea.presentacion.View.TareasView;
  */
 
 public class TareasPresenter extends BasePresenter<TareasView> {
+
+    private static final String TAG="TareasPresenter";
 
     private final ListarTareas listarTareas; //despues de DATOS
     private final TareaModelDataMapper tareaModelDataMapper;//despues de DATOS
@@ -48,6 +53,9 @@ public class TareasPresenter extends BasePresenter<TareasView> {
 
         //despues de DATOS
         view.mostrarLoading();
+        //15...data.realm
+        this.listarTareas.setParam(NetworkUtils.hayInternet(view.context()));
+
         this.listarTareas.ejecutar(new UseCase.Callback<List<Tareas>>() {
             @Override
             public void onSuccess(List<Tareas> response) {
@@ -57,7 +65,8 @@ public class TareasPresenter extends BasePresenter<TareasView> {
 
             @Override
             public void onError(Throwable t) {
-            view.ocultarLoading();
+                Log.e(TAG,"onError: ",t);
+                view.ocultarLoading();
             }
         });
 

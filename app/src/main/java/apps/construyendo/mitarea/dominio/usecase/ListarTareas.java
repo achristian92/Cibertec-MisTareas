@@ -13,16 +13,21 @@ import apps.construyendo.mitarea.dominio.repository.TareaRepositorio;
 
 public class ListarTareas extends UseCase<List<Tareas>> {
     private final TareaRepositorio tareaRepository;
+    private boolean forzarRed;//13 ...data
 
     public ListarTareas(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread, TareaRepositorio tareaRepository) {
         super(threadExecutor, postExecutionThread);
         this.tareaRepository=tareaRepository;
     }
+    //13..data
+    public void setParam(boolean forzarRed){
+        this.forzarRed=forzarRed;
+    }
 
     @Override
     protected void contruirUseCase() {
         try {
-            List<Tareas> tareasList=this.tareaRepository.listarTareas();
+            List<Tareas> tareasList=this.tareaRepository.listarTareas(forzarRed); //18..data
             notificarUseCaseSatisfactorio(tareasList);
         } catch (Exception e) {
             notificarUseCaseError(e);

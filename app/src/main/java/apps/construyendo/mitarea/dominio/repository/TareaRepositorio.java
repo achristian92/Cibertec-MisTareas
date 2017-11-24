@@ -10,8 +10,8 @@ import apps.construyendo.mitarea.dominio.model.Tareas;
  */
 
 public interface TareaRepositorio {
-
-    List<Tareas> listarTareas() throws Exception;
+    //modificamos   12 agrego boolean
+    List<Tareas> listarTareas(boolean forzarRed) throws Exception;
 
     Tareas crearTarea(Tareas tareas) throws Exception;
 

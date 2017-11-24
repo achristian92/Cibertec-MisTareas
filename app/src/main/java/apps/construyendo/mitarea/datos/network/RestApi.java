@@ -12,4 +12,7 @@ public interface RestApi {
     List<TareaEntity> listarTareas() throws Exception;
 
     TareaEntity guardarTarea(TareaEntity tareaEntity) throws Exception;
+
+    //ACTUALZAR-MIO..3
+   // TareaEntity actualizarTarea(TareaEntity tareaEntity) throws Exception;
 }

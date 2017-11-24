@@ -5,6 +5,7 @@ package apps.construyendo.mitarea.dominio.model;
  */
 
 public class Tareas {
+
     private String titulo;
     private String fecha;
     private String hora;
@@ -37,6 +38,8 @@ public class Tareas {
     public String getActivar() {
         return activar;
     }
+
+
 
     public void setActivar(String activar) {
         this.activar = activar;

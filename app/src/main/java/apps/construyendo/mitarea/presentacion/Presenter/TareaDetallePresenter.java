@@ -21,7 +21,7 @@ import apps.construyendo.mitarea.presentacion.View.TareaDetalleView;
 //despues de DATOS
 public class TareaDetallePresenter extends BasePresenter<TareaDetalleView> {
 
-    private static final String TAG = "NoticiaDetallePresenter";
+    private static final String TAG = "TareaDetallePresenter";
     private final GuardarTarea guardarTarea;
     private final TareaModelDataMapper tareaModelDataMapper;
 
