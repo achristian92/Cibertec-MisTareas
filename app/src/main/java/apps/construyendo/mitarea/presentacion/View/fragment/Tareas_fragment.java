@@ -89,7 +89,9 @@ public class Tareas_fragment extends Fragment implements TareasView,AdapterView.
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tarea, container, false);
+        View view= inflater.inflate(R.layout.fragment_tarea, container, false);
+        fabagregar=view.findViewById(R.id.float_agregar);
+        return view;
 
 
     }
@@ -97,7 +99,7 @@ public class Tareas_fragment extends Fragment implements TareasView,AdapterView.
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
         progressBar=view.findViewById(R.id.progress);
-        fabagregar=view.findViewById(R.id.float_agregar);
+       // fabagregar=view.findViewById(R.id.float_agregar);
         listatareas=view.findViewById(R.id.listview_tareas);
         //super.onViewCreated(view,savedInstanceState);
         listatareas.setOnItemClickListener(this);
@@ -132,14 +134,7 @@ public class Tareas_fragment extends Fragment implements TareasView,AdapterView.
         });*/
 
     }
-    public void servicio() {
-        Intent intent = new Intent(getActivity(), MyAlarmReceiver.class);
-        final PendingIntent pIntent = PendingIntent.getBroadcast(getActivity(), MyAlarmReceiver.REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        long firstMillis = System.currentTimeMillis(); //first run of alarm is immediate // aranca la palicacion
-        int intervalMillis = 1 * 3 * 1000; //3 segundos
-        AlarmManager alarm = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-        alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillis, intervalMillis, pIntent);
-    }
+
 
     @Override
     public void onStart() {
@@ -178,18 +173,7 @@ public class Tareas_fragment extends Fragment implements TareasView,AdapterView.
             listatareas.setItemChecked(index,true);
             verDetalle(tareasModelList.get(index));
         }
-        //mostrar el 1 dato por defecto
-        /*listatareas.post(new Runnable() {
-            @Override
-            public void run() {
-                Fragment tareadetallefragment=getFragmentManager().findFragmentById(R.id.frag_tareas_detalle);
-                if(tareadetallefragment!=null){
-                    verDetalle(tareasModelList.get(index));
-                    listatareas.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-                    listatareas.setItemChecked(index,true);
-                }
-            }
-        });*/ // creamos despues de package datos
+
     }
 
 
@@ -208,13 +192,6 @@ public class Tareas_fragment extends Fragment implements TareasView,AdapterView.
     }
 
 
-    //cuando tengo el activity todo creado ahora si llamo al metodo del activity
-   /* @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
-        tareasPresenter.cargarTareas();
-    }
-*/
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

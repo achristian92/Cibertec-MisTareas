@@ -34,10 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
-        android:clickable="true"
-
-        android:src="@drawable/icon_agregar"
-
+        android:src="@drawable/ic_create"
         />
 
 </FrameLayout>
