@@ -17,7 +17,7 @@ public class TareaCacheImpl implements TareaCache { //6
         Realm realm=Realm.getDefaultInstance();
         RealmQuery<TareaEntity> query=realm.where(TareaEntity.class);
         RealmResults<TareaEntity> results=query.findAll();
-        realm.close();
+       // realm.close();
         return results;
     }
 

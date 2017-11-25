@@ -1,5 +1,6 @@
 package apps.construyendo.mitarea.presentacion.notificaiones;
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,6 +10,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
@@ -21,10 +23,11 @@ import java.util.List;
 import apps.construyendo.mitarea.R;
 import apps.construyendo.mitarea.datos.entity.TareaEntity;
 import apps.construyendo.mitarea.presentacion.View.activity.MainActivity;
+import apps.construyendo.mitarea.presentacion.View.fragment.Tareas_Detalle_fragment;
 import io.realm.Realm;
 
 
-public class MyAlarmReceiver extends BroadcastReceiver {
+public class MyAlarmReceiver extends BroadcastReceiver  {
     public static final int REQUEST_CODE = 12345;
     private NotificationManager notificationManager;
     private final int NOTIFICATION_ID = 1010;
@@ -62,7 +65,7 @@ public class MyAlarmReceiver extends BroadcastReceiver {
                 alarma=fila.getString(0);
                 titulo=fila.getString(1);
                 descripcion =fila.getString(2);
-                triggerNotification(context,titulo+"\n"+descripcion);
+                triggerNotification(context,titulo+"");
             }
         }
         bd.close();
@@ -80,24 +83,29 @@ public class MyAlarmReceiver extends BroadcastReceiver {
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         long[] pattern = new long[]{2000, 1000, 2000};
 
+
+
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(contexto);
         builder.setContentIntent(contentIntent)
 
+
                 .setTicker("" )
-                .setContentTitle("alarma ")
+                .setContentTitle("Mis Tarea")
                 .setContentTitle("")
                 .setContentText(t)
                 .setContentInfo("Info")
-                .setLargeIcon(BitmapFactory.decodeResource(contexto.getResources(), R.drawable.icon_agregar))
-                .setSmallIcon(R.drawable.icon_agregar)
+                .setColor(Color.parseColor("#71b32a"))
+                .setLargeIcon(BitmapFactory.decodeResource(contexto.getResources(), R.drawable.ic_create))
+                .setSmallIcon(R.drawable.ic_create)
                 .setAutoCancel(true) //Cuando se pulsa la notificación ésta desaparece
                 .setSound(defaultSound)
                 .setVibrate(pattern);
 
         Notification notificacion = new NotificationCompat.BigTextStyle(builder)
                 .bigText(t)
-                .setBigContentTitle("ejemplo")
-                .setSummaryText("Resumen de tareas")
+                .setBigContentTitle("Mis Tareas")
+                .setSummaryText("Resumen de Tareas")
                 .build();
 
         notificationManager = (NotificationManager) contexto.getSystemService(Context.NOTIFICATION_SERVICE);

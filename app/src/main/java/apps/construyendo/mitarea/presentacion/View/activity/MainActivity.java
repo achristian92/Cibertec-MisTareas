@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements Tareas_fragment.o
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar=findViewById(R.id.toolbar_princi);
-        showToolbar("Mis TareasModel",false);
+        showToolbar("Mis Tareas-Cibertec",false);
 
         Fragment tareadetallefragment=getSupportFragmentManager().findFragmentById(R.id.frag_tareas_detalle);
         isDualPane = tareadetallefragment!=null;

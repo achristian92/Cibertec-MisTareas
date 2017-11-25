@@ -35,6 +35,7 @@ import apps.construyendo.mitarea.presentacion.Presenter.TareaDetallePresenter;
 import apps.construyendo.mitarea.presentacion.View.TareaDetalleView;
 import apps.construyendo.mitarea.presentacion.View.activity.MainActivity;
 import apps.construyendo.mitarea.presentacion.notificaiones.AdminSQLiteOpenHelper;
+import apps.construyendo.mitarea.presentacion.notificaiones.CancelarNotificacionReceiver;
 import apps.construyendo.mitarea.presentacion.notificaiones.MyAlarmReceiver;
 import apps.construyendo.mitarea.presentacion.notificaiones.vars;
 
@@ -191,6 +192,7 @@ public class Tareas_Detalle_fragment extends Fragment implements TareaDetalleVie
                 tareasModel.setActivar(false+"");
             }
             //ADIONAL PARA NOTIFICACIONES
+
             AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getActivity(), vars.bd, null, vars.version);
             SQLiteDatabase bd = admin.getReadableDatabase();
             bd = admin.getWritableDatabase();
