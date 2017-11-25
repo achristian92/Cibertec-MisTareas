@@ -1,7 +1,12 @@
 package apps.construyendo.mitarea.presentacion.View.fragment;
 
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -18,17 +23,38 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import apps.construyendo.mitarea.R;
 import apps.construyendo.mitarea.presentacion.Model.TareasModel;
 import apps.construyendo.mitarea.presentacion.Presenter.TareasPresenter;
 import apps.construyendo.mitarea.presentacion.View.TareasView;
+import apps.construyendo.mitarea.presentacion.notificaiones.AdminSQLiteOpenHelper;
+import apps.construyendo.mitarea.presentacion.notificaiones.MyAlarmReceiver;
+import apps.construyendo.mitarea.presentacion.notificaiones.vars;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class Tareas_fragment extends Fragment implements TareasView,AdapterView.OnItemClickListener {
+    //probando
+   /* private AdminSQLiteOpenHelper admin;
+    private SQLiteDatabase bd;
+    private ContentValues registro;
+    // date
+    private int year;
+    private int month;
+    private int day;
+    static final int DATE_DIALOG_ID = 999;
+    // hora
+    private int minute;
+    private int hour;
+    private static final int TIME_DIALOG_ID = 998;
+    Calendar calendario = Calendar.getInstance();
+    int hora, min,dia,mes,ano,hora11;
+    String cadenaF, cadenaH,fecha_sistema,hora_sistema;
+*/
 
     //instanciar widget
     ListView listatareas;
@@ -105,7 +131,14 @@ public class Tareas_fragment extends Fragment implements TareasView,AdapterView.
             }
         });*/
 
-
+    }
+    public void servicio() {
+        Intent intent = new Intent(getActivity(), MyAlarmReceiver.class);
+        final PendingIntent pIntent = PendingIntent.getBroadcast(getActivity(), MyAlarmReceiver.REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        long firstMillis = System.currentTimeMillis(); //first run of alarm is immediate // aranca la palicacion
+        int intervalMillis = 1 * 3 * 1000; //3 segundos
+        AlarmManager alarm = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+        alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillis, intervalMillis, pIntent);
     }
 
     @Override

@@ -78,7 +78,10 @@ public class TareasModel implements Parcelable{
 
     @Override
     public String toString() {
-        return titulo + "-" + fecha + "-" + hora + "-" + activar;
+        return  "Nombre de Tarea : " + titulo + "\n"  +
+                "Fecha : " +  fecha + "\n" +
+                "Hora : " + hora + "\n" +
+                "Recordar : "+ activar;
     }
 
 

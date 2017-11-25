@@ -2,10 +2,15 @@ package apps.construyendo.mitarea.presentacion.View.fragment;
 
 
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.ContentValues;
 import android.content.Context;
 
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,7 +20,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -29,11 +33,16 @@ import apps.construyendo.mitarea.R;
 import apps.construyendo.mitarea.presentacion.Model.TareasModel;
 import apps.construyendo.mitarea.presentacion.Presenter.TareaDetallePresenter;
 import apps.construyendo.mitarea.presentacion.View.TareaDetalleView;
+import apps.construyendo.mitarea.presentacion.View.activity.MainActivity;
+import apps.construyendo.mitarea.presentacion.notificaiones.AdminSQLiteOpenHelper;
+import apps.construyendo.mitarea.presentacion.notificaiones.MyAlarmReceiver;
+import apps.construyendo.mitarea.presentacion.notificaiones.vars;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class Tareas_Detalle_fragment extends Fragment implements TareaDetalleView,View.OnClickListener {
+
     Toolbar toolbar_detalle;
     EditText eedit_titulo,eedit_fecha,eedit_hora;
     Switch aswitch;
@@ -41,8 +50,16 @@ public class Tareas_Detalle_fragment extends Fragment implements TareaDetalleVie
     private static final String ARG_TAREAS = "fragment.NOTICIADETALLEFRAFMENT.ARG_NOTICIA";
     private Button btn_guardartarea;
     private ProgressBar progressBar;
-    private boolean recordarAlarma;
-    private int dia,mes,ano,hora,minutos;
+
+    //ADICIONAL PARA NOTIFICACIONES
+    private AdminSQLiteOpenHelper admin;
+    private SQLiteDatabase bd;
+    private ContentValues registro;
+    private int diaS, mesS, anoS,horaS,minutosS;
+    Calendar calendario = Calendar.getInstance();
+    int hora, min,dia,mes,ano;
+    String fecha_sistema,hora_sistema;
+
 
     //despues de DATOS
     private TareaDetallePresenter tareaDetallePresenter;
@@ -81,6 +98,19 @@ public class Tareas_Detalle_fragment extends Fragment implements TareaDetalleVie
     @Override
     public void onViewCreated(View view, @Nullable Bundle saveInstanceState){
         super.onViewCreated(view,saveInstanceState);
+        //ADIONAL PARA NOTIFICACIONES
+        admin = new AdminSQLiteOpenHelper(getActivity(), vars.bd, null, vars.version);
+        bd = admin.getWritableDatabase();
+        dia = calendario.get(Calendar.DAY_OF_MONTH);
+        mes = calendario.get(Calendar.MONTH)+1;
+        ano = calendario.get(Calendar.YEAR);
+        hora = calendario.get(Calendar.HOUR_OF_DAY);
+        min = calendario.get(Calendar.MINUTE);
+        fecha_sistema=mes+"-"+dia+"-"+ano+" ";
+        hora_sistema = hora+":"+min;
+        servicio();
+
+
         eedit_titulo=view.findViewById(R.id.edit_titulo);
         eedit_fecha=view.findViewById(R.id.edit_fecha);
         eedit_hora=view.findViewById(R.id.edit_hora);
@@ -101,7 +131,27 @@ public class Tareas_Detalle_fragment extends Fragment implements TareaDetalleVie
         eedit_hora.setOnClickListener(this);
 
 
+
+
     }
+
+
+    public void servicio() {
+        Intent intent = new Intent(getActivity(), MyAlarmReceiver.class);
+        final PendingIntent pIntent = PendingIntent.getBroadcast(getActivity(), MyAlarmReceiver.REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        long firstMillis = System.currentTimeMillis(); //first run of alarm is immediate // aranca la palicacion
+        int intervalMillis = 1 * 3 * 1000; //3 segundos
+        AlarmManager alarm = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+        alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillis, intervalMillis, pIntent);
+    }
+
+
+
+
+
+
+
+
     private void initUI(){
         if(tareasModel !=null){
             eedit_titulo.setText(tareasModel.getTitulo());
@@ -140,8 +190,25 @@ public class Tareas_Detalle_fragment extends Fragment implements TareaDetalleVie
             }else{
                 tareasModel.setActivar(false+"");
             }
-            //tareasModel.setActivar(aswitch.isChecked());
+            //ADIONAL PARA NOTIFICACIONES
+            AdminSQLiteOpenHelper admin = new AdminSQLiteOpenHelper(getActivity(), vars.bd, null, vars.version);
+            SQLiteDatabase bd = admin.getReadableDatabase();
+            bd = admin.getWritableDatabase();
+            registro = new ContentValues();
+            registro.put("encabezado", eedit_titulo.getText().toString());
+            registro.put("mensaje", eedit_titulo.getText().toString());//nombre del campo
+            registro.put("fecha", eedit_fecha.getText().toString());
+            registro.put("hora", eedit_hora.getText().toString());
+            bd.insert("alarma", null, registro);//nombre de la tabla
+            bd.close();
+           // edt_titulo.setText("");
+           // edt_mensaje.setText("");
+           // edit_fecha.setText("");
+           // edit_hora.setText("");
+            Toast.makeText(getActivity(), "alarma registrada", Toast.LENGTH_LONG).show();
             guardarTarea(tareasModel);
+
+
         }
         if(view==eedit_fecha){
             traerdialogfecha();
@@ -153,26 +220,26 @@ public class Tareas_Detalle_fragment extends Fragment implements TareaDetalleVie
 
     }
 
+
     private void traerdialoghora() {
         final Calendar c = Calendar.getInstance();
-        hora = c.get(Calendar.HOUR_OF_DAY);
-        minutos = c.get(Calendar.MINUTE);
+        horaS = c.get(Calendar.HOUR_OF_DAY);
+        minutosS = c.get(Calendar.MINUTE);
         TimePickerDialog timePickerDialog=new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int horaofDay, int minutos) {
                 eedit_hora.setText(horaofDay+":"+minutos);
             }
-        },hora,minutos,false);
+        },horaS,minutosS,false);
         timePickerDialog.show();
 
     }
 
     private void traerdialogfecha() {
-        // Get Current Date
         final Calendar c = Calendar.getInstance();
-        ano = c.get(Calendar.YEAR);
-        mes = c.get(Calendar.MONTH);
-        dia = c.get(Calendar.DAY_OF_MONTH);
+        anoS = c.get(Calendar.YEAR);
+        mesS = c.get(Calendar.MONTH);
+        diaS = c.get(Calendar.DAY_OF_MONTH);
 
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
@@ -182,10 +249,10 @@ public class Tareas_Detalle_fragment extends Fragment implements TareaDetalleVie
                     public void onDateSet(DatePicker view, int year,
                                           int monthOfYear, int dayOfMonth) {
 
-                        eedit_fecha.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                        eedit_fecha.setText((monthOfYear + 1) + "-" + dayOfMonth + "-" + year+" ");
 
                     }
-                }, dia, mes, ano);
+                }, diaS, mesS, anoS);
         datePickerDialog.show();
     }
 

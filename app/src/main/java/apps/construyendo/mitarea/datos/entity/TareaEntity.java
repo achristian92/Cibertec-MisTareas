@@ -2,7 +2,6 @@ package apps.construyendo.mitarea.datos.entity;
 
 import com.google.gson.annotations.SerializedName;
 
-import io.realm.RealmModel;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 

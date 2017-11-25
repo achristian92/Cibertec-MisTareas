@@ -1,10 +1,15 @@
 package apps.construyendo.mitarea;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.facebook.stetho.Stetho;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
 
+import java.util.ArrayList;
+
+import apps.construyendo.mitarea.datos.entity.TareaEntity;
+import apps.construyendo.mitarea.presentacion.notificaiones.ServicioTarea;
 import io.realm.Realm;
 
 /**
@@ -12,6 +17,7 @@ import io.realm.Realm;
  */
 
 public class TareasAplication extends Application { //2
+
     @Override
     public void onCreate(){
         super.onCreate();
@@ -21,6 +27,12 @@ public class TareasAplication extends Application { //2
                 .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
                 .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
                 .build());
+
+
+
+
+
+
 
     }
 }

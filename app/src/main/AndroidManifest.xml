@@ -21,6 +21,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".presentacion.View.activity.Detalle_TareaActivity" android:parentActivityName=".presentacion.View.activity.MainActivity"></activity>
+        <receiver
+            android:name=".presentacion.notificaiones.MyAlarmReceiver"
+            android:process=":remote" />
+
+        <service
+            android:name=".presentacion.notificaiones.MyTestService"
+            android:exported="false" />
     </application>
 
 </manifest>
